@@ -1,4 +1,4 @@
-using AspMvcUdemyPractice.Data;
+using AspMvcUdemyPractice.Data.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
