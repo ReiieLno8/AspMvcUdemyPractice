@@ -1,7 +1,7 @@
-﻿using AspMvcUdemyPractice.Models;
+﻿using AspMvcUdemyPractice.Models; // right click AspMvcUdemyPractice.Data > Add > Project reference > check the checkbox to apply
 using Microsoft.EntityFrameworkCore;
 
-namespace AspMvcUdemyPractice.Data
+namespace AspMvcUdemyPractice.Data.Data
 {
     public class ApplicationDbContext: DbContext
     {

@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspMvcUdemyPractice", "AspMvcUdemyPractice\AspMvcUdemyPractice.csproj", "{6133AACE-9735-4A26-B953-E4F81AA78A12}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspMvcUdemyPractice", "AspMvcUdemyPractice\AspMvcUdemyPractice.csproj", "{6133AACE-9735-4A26-B953-E4F81AA78A12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspMvcUdemyPractice.Data", "AspMvcUdemyPractice.Data\AspMvcUdemyPractice.Data.csproj", "{29B889A4-4B7D-4168-9D12-3BF4B277E62E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspMvcUdemyPractice.Models", "AspMvcUdemyPractice.Models\AspMvcUdemyPractice.Models.csproj", "{C62E9DB4-E93A-467B-B2DC-1838D6F5DC1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspMvcUdemyPractice.Utility", "AspMvcUdemyPractice.Utility\AspMvcUdemyPractice.Utility.csproj", "{8300450C-A8C7-4245-A78E-E98B0F491308}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{6133AACE-9735-4A26-B953-E4F81AA78A12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6133AACE-9735-4A26-B953-E4F81AA78A12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6133AACE-9735-4A26-B953-E4F81AA78A12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29B889A4-4B7D-4168-9D12-3BF4B277E62E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29B889A4-4B7D-4168-9D12-3BF4B277E62E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29B889A4-4B7D-4168-9D12-3BF4B277E62E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29B889A4-4B7D-4168-9D12-3BF4B277E62E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C62E9DB4-E93A-467B-B2DC-1838D6F5DC1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C62E9DB4-E93A-467B-B2DC-1838D6F5DC1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C62E9DB4-E93A-467B-B2DC-1838D6F5DC1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C62E9DB4-E93A-467B-B2DC-1838D6F5DC1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8300450C-A8C7-4245-A78E-E98B0F491308}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8300450C-A8C7-4245-A78E-E98B0F491308}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8300450C-A8C7-4245-A78E-E98B0F491308}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8300450C-A8C7-4245-A78E-E98B0F491308}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

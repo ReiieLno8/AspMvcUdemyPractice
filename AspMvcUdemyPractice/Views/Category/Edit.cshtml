@@ -1,16 +1,17 @@
 ﻿@model Category
 
 <form method="post">
+    <input asp-for="Id" hidden /> @*so that the Id will be populated and avoid any kids of error*@
     <div class="border p-3 mt-4">
         <div class="row pb-4">
-            <h2 class="text-primary">
-                Create Category
+            <h2 class="text-primary p-1">
+                Edit Category
             </h2>
         </div>
         <div asp-validation-summary="All"></div> <!--Error Summary printed on top-->
         <div class="mb-3 row p-1">
             <label asp-for="Name" class="p-0"></label>
-            <input asp-for="Name" class="form-control"/> <!--No need to add type="text" bec the tag helper knows that Name contains string-->
+            <input asp-for="Name" class="form-control" /> <!--No need to add type="text" bec the tag helper knows that Name contains string-->
             <span asp-validation-for="Name" class="text-danger"></span> <!--Error Message-->
         </div>
         <div class="mb-3 row p-1">
@@ -20,7 +21,7 @@
         </div>
         <div class="row">
             <div class="col-6 col-md-3">
-                <button type="submit" class="btn btn-primary form-control">Create</button>
+                <button type="submit" class="btn btn-primary form-control">Update</button>
             </div>
             <div class="col-6 col-md-3">
                 <a asp-controller="Category" asp-action="Index" class="btn btn-secondary border form-control">Back to List</a>
@@ -31,6 +32,7 @@
 
 @section Scripts{
     @{
-        <partial name="_ValidationScriptsPartial"/> /*_ValidationScriptsPartial file under Shared folder is a script file for client side validation. name should be match in order to work, tag helper "partial" by default it will look for shared folder */
+        <partial name="_ValidationScriptsPartial" />
+        /*_ValidationScriptsPartial file under Shared folder is a script file for client side validation. name should be match in order to work, tag helper "partial" by default it will look for shared folder */
     }
 }
