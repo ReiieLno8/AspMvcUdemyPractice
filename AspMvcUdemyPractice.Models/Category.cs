@@ -5,7 +5,7 @@ namespace AspMvcUdemyPractice.Models
 {
     public class Category
     {
-        [Key]
+        [Key] // data annotations.
         public int Id { get; set; }
         [Required]
         [MaxLength(30)]

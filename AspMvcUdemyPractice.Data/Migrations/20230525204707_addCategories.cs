@@ -7,7 +7,7 @@
 namespace AspMvcUdemyPractice.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddCategoryToTableAndSeedTable : Migration
+    public partial class addCategories : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,8 +32,8 @@ namespace AspMvcUdemyPractice.Data.Migrations
                 values: new object[,]
                 {
                     { 1, 1, "Action" },
-                    { 2, 2, "Sci-fi" },
-                    { 3, 1, "Horror" }
+                    { 2, 2, "SciFi" },
+                    { 3, 3, "History" }
                 });
         }
 

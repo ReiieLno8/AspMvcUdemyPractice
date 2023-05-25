@@ -52,13 +52,13 @@ namespace AspMvcUdemyPractice.Data.Migrations
                         {
                             Id = 2,
                             DisplayOrder = 2,
-                            Name = "Sci-fi"
+                            Name = "SciFi"
                         },
                         new
                         {
                             Id = 3,
-                            DisplayOrder = 1,
-                            Name = "Horror"
+                            DisplayOrder = 3,
+                            Name = "History"
                         });
                 });
 #pragma warning restore 612, 618
