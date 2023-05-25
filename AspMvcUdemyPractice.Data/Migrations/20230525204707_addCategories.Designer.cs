@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspMvcUdemyPractice.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230524191312_AddCategoryToTableAndSeedTable")]
-    partial class AddCategoryToTableAndSeedTable
+    [Migration("20230525204707_addCategories")]
+    partial class addCategories
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,13 +55,13 @@ namespace AspMvcUdemyPractice.Data.Migrations
                         {
                             Id = 2,
                             DisplayOrder = 2,
-                            Name = "Sci-fi"
+                            Name = "SciFi"
                         },
                         new
                         {
                             Id = 3,
-                            DisplayOrder = 1,
-                            Name = "Horror"
+                            DisplayOrder = 3,
+                            Name = "History"
                         });
                 });
 #pragma warning restore 612, 618
