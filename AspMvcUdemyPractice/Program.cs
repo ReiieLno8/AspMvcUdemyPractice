@@ -1,10 +1,20 @@
+<<<<<<< Updated upstream
 using AspMvcUdemyPractice.Data;
+=======
+using AspMvcUdemyPractice.Data.Data;
+using AspMvcUdemyPractice.Data.Repository.IRepository;
+>>>>>>> Stashed changes
 using Microsoft.EntityFrameworkCore;
+using AspMvcUdemyPractice.Data.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+//if there are any service you have to register that to dependency injection
+// scoped is commonly used  because for one request it will be used the same service 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 
@@ -25,6 +35,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}"); // This is a route Option
 
 app.Run();

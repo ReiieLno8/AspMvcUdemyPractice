@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace AspMvcUdemyPractice.Controllers
+namespace AspMvcUdemyPractice.Areas.Customer.Controllers
 {
+    [Area("Customer")] // Tells the controller that this is belong to a specific area
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
