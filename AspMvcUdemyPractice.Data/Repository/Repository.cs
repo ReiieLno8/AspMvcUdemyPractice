@@ -19,6 +19,7 @@ namespace AspMvcUdemyPractice.DataAccess.Repository
             _db = db;
             this.dbSet = _db.Set<T>();
             //_db.Categories == dbSet
+            _db.Products.Include(u => u.Category).Include(u => u.CategoryID); //To include category
             
         }
 
@@ -27,12 +28,34 @@ namespace AspMvcUdemyPractice.DataAccess.Repository
             dbSet.Add(entity);
         }
 
-        public T Get(Expression<Func<T, bool>> filter)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
         {
             IQueryable<T> query = dbSet;
             query = query.Where(filter);
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
             return query.FirstOrDefault();
 
+        }
+
+        //Category,CoverType
+        // udemy section 6.98
+        public IEnumerable<T> GetAll(string? includeProperties = null)
+        {
+            IQueryable<T> query = dbSet;
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
+            return query.ToList();
         }
 
         public IEnumerable<T> GetAll()

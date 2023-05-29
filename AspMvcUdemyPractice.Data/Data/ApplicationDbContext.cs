@@ -1,5 +1,6 @@
 ﻿using AspMvcUdemyPractice.Models; // right click AspMvcUdemyPractice.Data > Add > Project reference > check the checkbox to apply
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace AspMvcUdemyPractice.Data.Data
 {
@@ -15,9 +16,9 @@ namespace AspMvcUdemyPractice.Data.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Category>().HasData(
-                new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
-                new Category { Id = 2, Name = "SciFi", DisplayOrder = 2 },
-                new Category { Id = 3, Name = "History", DisplayOrder = 3 }
+                new Category { Id = 3, Name = "Action", DisplayOrder = 41 },
+                new Category { Id = 2, Name = "SciFi", DisplayOrder = 62 },
+                new Category { Id = 1, Name = "History", DisplayOrder = 23 }
                 );
             modelBuilder.Entity<Product>().HasData(
                 new Product
@@ -30,7 +31,9 @@ namespace AspMvcUdemyPractice.Data.Data
                     ListPrice = 99,
                     Price = 90,
                     Price50 = 85,
-                    Price100 = 80
+                    Price100 = 80,
+                    CategoryID = 1,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -42,7 +45,10 @@ namespace AspMvcUdemyPractice.Data.Data
                     ListPrice = 40,
                     Price = 30,
                     Price50 = 25,
-                    Price100 = 20
+                    Price100 = 20,
+                    CategoryID = 2,
+                    ImageUrl = ""
+
                 },
                 new Product
                 {
@@ -54,7 +60,9 @@ namespace AspMvcUdemyPractice.Data.Data
                     ListPrice = 55,
                     Price = 50,
                     Price50 = 40,
-                    Price100 = 35
+                    Price100 = 35,
+                    CategoryID = 3,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -66,7 +74,9 @@ namespace AspMvcUdemyPractice.Data.Data
                     ListPrice = 70,
                     Price = 65,
                     Price50 = 60,
-                    Price100 = 55
+                    Price100 = 55,
+                    CategoryID = 3,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -78,7 +88,9 @@ namespace AspMvcUdemyPractice.Data.Data
                     ListPrice = 30,
                     Price = 27,
                     Price50 = 25,
-                    Price100 = 20
+                    Price100 = 20,
+                    CategoryID = 2,
+                    ImageUrl = ""
                 },
                 new Product
                 {
@@ -90,9 +102,11 @@ namespace AspMvcUdemyPractice.Data.Data
                     ListPrice = 25,
                     Price = 23,
                     Price50 = 22,
-                    Price100 = 20
+                    Price100 = 20,
+                    CategoryID = 1,
+                    ImageUrl = ""
                 }
-                );
+                ) ;
         }
     }
 }
