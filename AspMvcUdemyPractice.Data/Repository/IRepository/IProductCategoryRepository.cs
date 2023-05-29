@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AspMvcUdemyPractice.Data.Repository.IRepository
 {
-    public interface IProductCategoryRepository : IProductRepository<Product>
+    public interface IProductCategoryRepository : IRepository<Product>
     {
         void Update(Product obj);
     }
