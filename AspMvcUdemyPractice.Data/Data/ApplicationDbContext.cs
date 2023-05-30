@@ -1,10 +1,12 @@
 ﻿using AspMvcUdemyPractice.Models; // right click AspMvcUdemyPractice.Data > Add > Project reference > check the checkbox to apply
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace AspMvcUdemyPractice.Data.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext <IdentityUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -13,8 +15,11 @@ namespace AspMvcUdemyPractice.Data.Data
 
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder); //keys of identifying table mapped on model creating. you need to add this if you add IdentityDbContext
+
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 3, Name = "Action", DisplayOrder = 41 },
                 new Category { Id = 2, Name = "SciFi", DisplayOrder = 62 },

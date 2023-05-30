@@ -2,12 +2,16 @@
 using AspMvcUdemyPractice.DataAccess.Repository.IRepository;
 using AspMvcUdemyPractice.Models;
 using AspMvcUdemyPractice.Models.ViewModels;
+using AspMvcUdemyPractice.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data;
 
 namespace AspMvcUdemyPractice.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)] // even though you access the category using link you cant still access it because of authorization 
     public class ProductController: Controller
     {
         private readonly IUnitOfWork _unitOfWork;
