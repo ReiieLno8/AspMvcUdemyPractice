@@ -2,12 +2,25 @@ using AspMvcUdemyPractice.Data.Data;
 using AspMvcUdemyPractice.DataAccess.Repository.IRepository;
 using AspMvcUdemyPractice.DataAccess.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using AspMvcUdemyPractice.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = $"/Identity/Account/Login";
+    options.LogoutPath = $"/Identity/Account/Logout";
+    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+});
+builder.Services.AddRazorPages(); // telling the program that we are running razor pages
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,8 +36,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication(); // authentication first before authorization reason is authentication is checking password and username is valid
 app.UseAuthorization();
-
+app.MapRazorPages(); // adds routing that is needed to map razor pages
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");

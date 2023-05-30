@@ -2,11 +2,14 @@
 using AspMvcUdemyPractice.DataAccess.Repository;
 using AspMvcUdemyPractice.DataAccess.Repository.IRepository;
 using AspMvcUdemyPractice.Models;
+using AspMvcUdemyPractice.Utility;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspMvcUdemyPractice.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)] // even though you access the category using link you cant still access it because of authorization 
     public class CategoryController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
