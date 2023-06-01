@@ -25,15 +25,15 @@ namespace AspMvcUdemyPractice.Areas.Admin.Controllers
         }
 
         // to get the details from the DB and auto populate it in the textbox we need to get the ID using the parameter "companyID" note: make sure that the name of the parameter is the same.
-        public IActionResult CompanyUpsert(int? companyId)
+        public IActionResult CompanyUpsert(int? id)
         {
-            if (companyId == null)
+            if (id == null)
             {
                 return View(new Company());
             }
             else
             {
-                Company company = _unitOfWork.CompanyCategory.Get(u => u.CompanyId == companyId);
+                Company company = _unitOfWork.CompanyCategory.Get(u => u.Id == id);
                 return View(company);
             }
         }
@@ -42,7 +42,7 @@ namespace AspMvcUdemyPractice.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (companyObj.CompanyId == 0)
+                if (companyObj.Id == 0)
                 {
                     _unitOfWork.CompanyCategory.Add(companyObj);
                 }
@@ -72,7 +72,7 @@ namespace AspMvcUdemyPractice.Areas.Admin.Controllers
         [HttpDelete]
         public IActionResult Delete(int? id)
         {
-            var CompanyToBeDeleted = _unitOfWork.CompanyCategory.Get(u => u.CompanyId == id);
+            var CompanyToBeDeleted = _unitOfWork.CompanyCategory.Get(u => u.Id == id);
             if (id == null)
             {
                 return Json(new { success = false, message = "Error while deleting" });

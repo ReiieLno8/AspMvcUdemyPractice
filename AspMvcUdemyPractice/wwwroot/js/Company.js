@@ -16,9 +16,9 @@ function loadDataTable() {   /* details for api*/
             { data: 'postal', "width": "10%" },
             { data: 'phoneNumber', "width": "15%" },
             {
-                data: 'companyId', "render": function (data) {
+                data: 'id', "render": function (data) {
                     return `<div class="w-75 btn-group" role="group">
-                                <a href="/Admin/Company/CompanyUpsert?companyId=${data}" class="btn btn-outline-info mx-2"> <i class="bi bi-pencil-square"></i></a>
+                                <a href="/Admin/Company/CompanyUpsert?id=${data}" class="btn btn-outline-info mx-2"> <i class="bi bi-pencil-square"></i></a>
                                 <a onClick=Delete('/Admin/Company/Delete/${data}') class="btn btn-outline-danger mx-2"> <i class="bi bi-trash3"></i></a>
                             </div>`
                 }, "width": "15%"

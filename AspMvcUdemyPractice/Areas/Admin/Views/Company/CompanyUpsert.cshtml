@@ -5,14 +5,14 @@
         <div class="row">
             <div class="row pb-4">
                 <h2 class="text-primary">
-                    @(Model.CompanyId != 0 ? "Update" : "Create") Company
+                    @(Model.Id != 0 ? "Update" : "Create") Company
                 </h2>
             </div>
         </div>
     </div>
     <div class="card-body p-4">
         <form method="post" enctype="multipart/form-data">
-            <input asp-for="CompanyId" hidden /> @*to get the value of Id and hidding it*@
+            <input asp-for="Id" hidden /> @*to get the value of Id and hidding it*@
             <div class="row">
                 <div class="col-10">
                     <div asp-validation-summary="All"></div> <!--Error Summary printed on top-->
@@ -48,7 +48,7 @@
                     </div>
                     <div class="row">
                         <div class="col-6 col-md-3">
-                            @if (Model.CompanyId != 0)
+                            @if (Model.Id != 0)
                             {
                                 <button type="submit" class="btn btn-outline-primary form-control">Update</button>
                             }
