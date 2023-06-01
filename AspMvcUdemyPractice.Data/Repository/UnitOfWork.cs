@@ -15,12 +15,14 @@ namespace AspMvcUdemyPractice.DataAccess.Repository
         private ApplicationDbContext _db;
         public ICategoryRepository Category { get; private set; }
         public IProductCategoryRepository ProductCategory { get; private set; }
+        public ICompanyRepository CompanyCategory { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
             _db = db;
             Category = new CategoryRepository(_db);
             ProductCategory = new ProductCategoryRepository(_db);
+            CompanyCategory = new CompanyRepository(_db);
         }
 
         public void Save()
