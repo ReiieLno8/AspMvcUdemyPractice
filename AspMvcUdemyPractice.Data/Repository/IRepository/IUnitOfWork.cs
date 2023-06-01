@@ -11,6 +11,7 @@ namespace AspMvcUdemyPractice.DataAccess.Repository.IRepository
     {
         ICategoryRepository Category { get; }
         IProductCategoryRepository ProductCategory { get; }
+        ICompanyRepository CompanyCategory { get; }
 
         void Save();
     }
