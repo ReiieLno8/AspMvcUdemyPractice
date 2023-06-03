@@ -23,5 +23,8 @@ namespace AspMvcUdemyPractice.Models
         [ForeignKey("ApplicationUserId")]
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
+
+        [NotMapped] // it will not add on the database bec we only need price for display puposes
+        public double Price { get; set; }
     }
 }
