@@ -10,16 +10,17 @@ using System.Threading.Tasks;
 
 namespace AspMvcUdemyPractice.Data.Repository
 {
-    public class CompanyRepository : Repository<Company>, ICompanyRepository
+    public class OrderDetailRepository : Repository<OrderDetail>, IOrderDetailRepository
     {
         private ApplicationDbContext _db;
-        public CompanyRepository(ApplicationDbContext db) : base(db)
-        {
+        public OrderDetailRepository(ApplicationDbContext db) : base(db)
+        { 
             _db = db;
         }
-            public void Update(Company obj)
+
+        public void Update(OrderDetail obj)
         {
-            _db.Companies.Update(obj);
+            _db.OrderDetails.Update(obj);
         }
     }
 }
