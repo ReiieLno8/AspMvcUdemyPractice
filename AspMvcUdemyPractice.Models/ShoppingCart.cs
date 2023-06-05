@@ -24,7 +24,7 @@ namespace AspMvcUdemyPractice.Models
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
 
-        [NotMapped] // it will not add on the database bec we only need price for display puposes
+        [NotMapped] // it will not add on the database bec we only need price for display purposes
         public double Price { get; set; }
     }
 }
