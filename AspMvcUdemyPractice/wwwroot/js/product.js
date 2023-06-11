@@ -4,7 +4,7 @@ $(document).ready(function () {
     loadDataTable();
 });
 
-
+/*To get the Api control add /getall to the url*/
 function loadDataTable() {   /* details for api*/
     dataTable = $('#tblData').DataTable({ 
         "ajax": { url: '/admin/product/getall' },
