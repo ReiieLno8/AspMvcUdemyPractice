@@ -124,7 +124,7 @@ namespace AspMvcUdemyPractice.Areas.Customer.Controllers
 
 			if (applicationUser.CompanyId.GetValueOrDefault() == 0)
 			{
-				// session 11.150
+				// section 11.150
 				//it is a regular customer account and we  need to capture payment
 				//stripe logic note(go to stipesession.net then checkout session)
 				var domain = "https://localhost:7130/";
