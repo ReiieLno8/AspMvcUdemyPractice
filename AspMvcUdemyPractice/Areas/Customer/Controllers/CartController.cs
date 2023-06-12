@@ -180,14 +180,14 @@ namespace AspMvcUdemyPractice.Areas.Customer.Controllers
 					_unitOfWork.OrderHeaderCategory.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
 					_unitOfWork.Save();
 				}
-			}
+                HttpContext.Session.Clear(); // after the the purchase shopping cart counter will turn back to zero
+            }
 
 			// removing all the content inside shopping cart
 			List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCartCategory.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
 			_unitOfWork.ShoppingCartCategory.RemoveRange(shoppingCarts);
 			_unitOfWork.Save();
-
-			return View(id);
+            return View(id);
 		}
 
 		public IActionResult Plus(int cartId)
@@ -201,10 +201,11 @@ namespace AspMvcUdemyPractice.Areas.Customer.Controllers
 
 		public IActionResult Minus(int cartId)
 		{
-			var cartFromDb = _unitOfWork.ShoppingCartCategory.Get(u => u.Id == cartId);
+			var cartFromDb = _unitOfWork.ShoppingCartCategory.Get(u => u.Id == cartId, tracked: true);
 			if (cartFromDb.Count <= 1)
 			{
-				_unitOfWork.ShoppingCartCategory.Remove(cartFromDb);
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCartCategory.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
+                _unitOfWork.ShoppingCartCategory.Remove(cartFromDb);
 			}
 			else
 			{
@@ -218,8 +219,9 @@ namespace AspMvcUdemyPractice.Areas.Customer.Controllers
 
 		public IActionResult Remove(int cartId)
 		{
-			var cartFromDb = _unitOfWork.ShoppingCartCategory.Get(u => u.Id == cartId);
-			_unitOfWork.ShoppingCartCategory.Remove(cartFromDb);
+			var cartFromDb = _unitOfWork.ShoppingCartCategory.Get(u => u.Id == cartId, tracked: true);
+            HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCartCategory.GetAll(u => u.ApplicationUserId == cartFromDb.ApplicationUserId).Count() - 1);
+            _unitOfWork.ShoppingCartCategory.Remove(cartFromDb);
 			_unitOfWork.Save();
 			return RedirectToAction(nameof(Index));
 		}

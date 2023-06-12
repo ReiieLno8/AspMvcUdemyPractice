@@ -1,7 +1,9 @@
 ﻿using AspMvcUdemyPractice.DataAccess.Repository.IRepository;
 using AspMvcUdemyPractice.Models;
 using AspMvcUdemyPractice.Models.ViewModels;
+using AspMvcUdemyPractice.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
@@ -54,13 +56,15 @@ namespace AspMvcUdemyPractice.Areas.Customer.Controllers
             {
                 cartFromDb.Count += shoppingCart.Count;
                 _unitOfWork.ShoppingCartCategory.Update(cartFromDb);
+                _unitOfWork.Save();
             }
             else // add shopping cart
             { 
                 _unitOfWork.ShoppingCartCategory.Add(shoppingCart);
+                _unitOfWork.Save();
+                HttpContext.Session.SetInt32(SD.SessionCart, _unitOfWork.ShoppingCartCategory.GetAll(u => u.ApplicationUserId == userId).Count());
             }
             TempData["success"] = "Cart updated successfully";
-            _unitOfWork.Save();
             return RedirectToAction(nameof(Index));
         }
 
