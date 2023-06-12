@@ -22,6 +22,20 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = $"/Identity/Account/Logout";
     options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 });
+builder.Services.AddAuthentication().AddFacebook(option =>   //Facebook login Authentication Note:install first microsoft.aspnetcore.Authentication.facebook
+{
+    option.AppId = "819055729563189";
+    option.AppSecret = "ecd10cd1c2d75bb7de795a863a5fc9ee";
+});
+
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(100);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 builder.Services.AddRazorPages(); // telling the program that we are running razor pages
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
@@ -43,6 +57,7 @@ app.UseRouting();
 
 app.UseAuthentication(); // authentication first before authorization reason is authentication is checking password and username is valid
 app.UseAuthorization();
+app.UseSession();
 app.MapRazorPages(); // adds routing that is needed to map razor pages
 app.MapControllerRoute(
     name: "default",
