@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using AspMvcUdemyPractice.Utility;
 using Stripe;
+using AspMvcUdemyPractice.Data.DbInitializer;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -36,6 +37,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddRazorPages(); // telling the program that we are running razor pages
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
@@ -58,9 +60,19 @@ app.UseRouting();
 app.UseAuthentication(); // authentication first before authorization reason is authentication is checking password and username is valid
 app.UseAuthorization();
 app.UseSession();
+SeedDatabase();
 app.MapRazorPages(); // adds routing that is needed to map razor pages
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInitializer.Initialize();
+    }
+}

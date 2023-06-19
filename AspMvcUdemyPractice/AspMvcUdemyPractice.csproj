@@ -24,4 +24,8 @@
     <ProjectReference Include="..\AspMvcUdemyPractice.Data\AspMvcUdemyPractice.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\product\" />
+  </ItemGroup>
+
 </Project>
