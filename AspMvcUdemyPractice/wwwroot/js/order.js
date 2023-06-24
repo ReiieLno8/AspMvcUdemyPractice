@@ -1,4 +1,5 @@
-﻿var dataTable;
+﻿/*if js is not working try hard reload  CTRL + SHIFT + R*/
+var dataTable;
 
 $(document).ready(function () {
     var url = window.location.search;
