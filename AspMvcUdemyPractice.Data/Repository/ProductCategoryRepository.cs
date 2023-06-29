@@ -32,11 +32,12 @@ namespace AspMvcUdemyPractice.Data.Repository
                 objFromDb.Price100 = obj.Price100;
                 objFromDb.Price50 = obj.Price50;
                 objFromDb.ISBN = obj.ISBN;
+                objFromDb.ProductImages = obj.ProductImages;
 
-                if (obj.ImageUrl != null)
-                { 
-                    objFromDb.ImageUrl = obj.ImageUrl;
-                }
+                //if (obj.ImageUrl != null)
+                //{ 
+                //    objFromDb.ImageUrl = obj.ImageUrl;
+                //}
             }
         }
     }

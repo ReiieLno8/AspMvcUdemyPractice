@@ -13,7 +13,6 @@
     <div class="card-body p-4">
         <form method="post" enctype="multipart/form-data">
             <input asp-for="Product.Id" hidden /> @*to get the value of Id and hidding it*@
-            <input asp-for="Product.ImageUrl" hidden />
             <div class="row">
                 <div class="col-10">
                     <div asp-validation-summary="All"></div> <!--Error Summary printed on top-->
@@ -64,8 +63,8 @@
                         <span asp-validation-for="Product.CategoryID" class="text-danger"></span> <!--Error Message-->
                     </div>
                     <div class="mb-3 row p-1">
-                        <label asp-for="Product.ImageUrl" class="p-0"></label>
-                        <input type="file" name="file" id="file" class="form-control"></input> <!--No need to put text in the label since we are using tag helper-->
+                        <label asp-for="Product.ProductImages" class="p-0"></label>
+                        <input type="file" name="files" class="form-control" multiple></input> <!--No need to put text in the label since we are using tag helper-->
                     </div>
                     <div class="row">
                         <div class="col-6 col-md-3">
@@ -84,8 +83,18 @@
                     </div>
                 </div>
                 <div class="col-2">
-                    <img src="@Model.Product.ImageUrl" width="100%"
-                         style="border-radius:5px; border:1px solid #bbb9b9" />
+                    @if (Model.Product.ProductImages != null)
+                    {
+                        foreach (var image in Model.Product.ProductImages)
+                        {
+                            <div class="border p-1 m-2 text-center">
+                                <img src="@image.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+                                <a asp-action="DeleteImage" class="btn btn-danger" asp-route-imageId="@image.Id">
+                                    <i class="bi bi-trash-fill"></i>Delete
+                                </a>
+                            </div>
+                        }
+                    }
                 </div>
             </div>
 
@@ -100,8 +109,8 @@
             @*===========> Visit Tiny.cloud for richbox api <==============*@
             tinymce.init({
                 selector: 'textarea',
-                plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss',
-                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+                plugins: 'anchor autolink charmap codesample emoticons lists table visualblocks wordcount',
+                toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | align lineheight | checklist numlist bullist indent outdent ',
                 tinycomments_mode: 'embedded',
                 tinycomments_author: 'Author name',
                 mergetags_list: [

@@ -16,6 +16,7 @@ namespace AspMvcUdemyPractice.DataAccess.Repository.IRepository
         IApplicationUserRepository ApplicationUser { get; }
         IOrderDetailRepository OrderDetailCategory { get; }
         IOrderHeaderRepository OrderHeaderCategory { get; }
+        IProductImageRepository ProductImage { get; }
 
         void Save();
     }
