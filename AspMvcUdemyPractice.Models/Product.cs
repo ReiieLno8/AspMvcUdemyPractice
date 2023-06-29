@@ -44,7 +44,11 @@ namespace AspMvcUdemyPractice.Models
         [ForeignKey("CategoryID")]
         [ValidateNever]
         public Category Category { get; set; }
+
         [ValidateNever]
-        public string ImageUrl { get; set; }
+        //we can create list of product image where we can carry or load all of the images for our product
+        //So that way we are telling entity framework core about the one to many relation that we have between
+        //product and product image.
+        public List<ProductImage> ProductImages { get; set; }
     }
 }

@@ -47,39 +47,15 @@ namespace AspMvcUdemyPractice.Areas.Admin.Controllers
             }
             else
             {
-                productVM.Product = _unitOfWork.ProductCategory.Get(u => u.Id == id);
+                productVM.Product = _unitOfWork.ProductCategory.Get(u => u.Id == id,includeProperties: "ProductImages");
                 return View(productVM);
             }
         }
         [HttpPost]
-        public IActionResult ProductUpsert(ProductVM productVM, IFormFile? file)
+        public IActionResult ProductUpsert(ProductVM productVM, List<IFormFile> files)
         {
-            if (ModelState.IsValid) //checking if Product is valid and populated
-            {
-                string wwwRootPath = _webHostEnvironment.WebRootPath; // webrootpath will give as a path of wwwroot folder
-                if (file != null)
-                {
-                    // udemy section 6.94
-                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); // will give as a random name to our file (this is file name)
-                    var productPath = Path.Combine(wwwRootPath, @"Images\product"); // it will give a path inside this product folder where we have to actually uploaded this "file"  (location where we save the file )
-                    if (!string.IsNullOrEmpty(productVM.Product.ImageUrl))
-                    {
-                        //old image path
-                        var oldImagePath = Path.Combine(wwwRootPath, productVM.Product.ImageUrl.TrimStart('\\'));
-
-                        if (System.IO.File.Exists(oldImagePath)) //checking if path is exist
-                        { 
-                            System.IO.File.Delete(oldImagePath);// if exist deleting the image
-                        }
-                    }
-
-                    using (var fileStream = new FileStream(Path.Combine(productPath, fileName), FileMode.Create))
-                    {
-                        file.CopyTo(fileStream);
-                    }
-                    productVM.Product.ImageUrl = @"\Images\product\" + fileName;
-                }
-
+            if (ModelState.IsValid)
+            { 
                 if (productVM.Product.Id == 0)
                 {
                     _unitOfWork.ProductCategory.Add(productVM.Product);
@@ -90,8 +66,46 @@ namespace AspMvcUdemyPractice.Areas.Admin.Controllers
                 }
 
                 _unitOfWork.Save();
-                TempData["success"] = "Successfully Created.";//for notification purposes check _Notification.cshtml
-                return RedirectToAction("Index"); // once the category will added we have to redirect to category Index to see all categories
+
+                string wwwRootPath = _webHostEnvironment.WebRootPath; // webrootpath will give as a path of wwwroot folder
+                if (files != null)
+                {
+                    // Udemy section 16.201 for Image multiple upload 
+                    foreach (IFormFile file in files)
+                    {
+                        // udemy section 6.94
+                        string fileName = Guid.NewGuid().ToString() + Path.GetExtension(file.FileName); // will give as a random name to our file (this is file name)
+                        string productPath = @"images\product\product-" + productVM.Product.Id; // it will give a path inside this product folder where we have to actually uploaded this "file"  (location where we save the file )
+                        string finalPath = Path.Combine(wwwRootPath, productPath);
+
+                        if (!Directory.Exists(finalPath))
+                        {
+                            Directory.CreateDirectory(finalPath);
+                        }
+                        using (var fileStream = new FileStream(Path.Combine(finalPath, fileName), FileMode.Create))
+                        {
+                            file.CopyTo(fileStream);
+                        }
+
+                        ProductImage productImage = new()
+                        {
+                            ImageUrl = @"\" + productPath + @"\" + fileName,
+                            ProductId = productVM.Product.Id,
+                        };
+                        if (productVM.Product.ProductImages == null)
+                        {
+                            productVM.Product.ProductImages = new List<ProductImage>();
+                        }
+                        productVM.Product.ProductImages.Add(productImage);
+                    }
+
+                    _unitOfWork.ProductCategory.Update(productVM.Product);
+                    _unitOfWork.Save();
+                }
+
+                TempData["success"] = "Product created successfully";
+                return RedirectToAction("Index");
+                //Note === we add "objFromDb.ProductImages = obj.ProductImages;" to ProductCategoryRepository
             }
             else
             {
@@ -104,7 +118,32 @@ namespace AspMvcUdemyPractice.Areas.Admin.Controllers
                 return View(productVM);
             }
         }
-         
+
+
+        // section 16 chapter 204
+        public IActionResult DeleteImage(int imageId)
+        {
+            var imageToBeDeleted = _unitOfWork.ProductImage.Get(u => u.Id == imageId);
+            int productId = imageToBeDeleted.ProductId;
+            if (imageToBeDeleted != null)
+            {
+                if (!string.IsNullOrEmpty(imageToBeDeleted.ImageUrl))
+                {
+                    var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, imageToBeDeleted.ImageUrl.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
+
+                _unitOfWork.ProductImage.Remove(imageToBeDeleted);
+                _unitOfWork.Save();
+
+                TempData["success"] = "Deleted Successfully";
+            }
+
+            return RedirectToAction(nameof(ProductUpsert), new { id = productId});
+        }
 
         #region API
 
@@ -124,11 +163,18 @@ namespace AspMvcUdemyPractice.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Error while deleting" });
             }
 
-            var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, productToBeDeleted.ImageUrl.TrimStart('\\'));
+            string productPath = @"images\product\product-" + id; // it will give a path inside this product folder where we have to actually uploaded this "file"  (location where we save the file )
+            string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
 
-            if (System.IO.File.Exists(oldImagePath)) //checking if path is exist
+            if (Directory.Exists(finalPath))
             {
-                System.IO.File.Delete(oldImagePath);// if exist deleting the image
+                //But before we delete the directory we have to retrieve all the files in that directory and remove each file
+                string[] filePaths = Directory.GetFiles(finalPath);
+                foreach (string filePath in filePaths)
+                {
+                    System.IO.File.Delete(filePath); //So we are deleting the individual files here in that folder.
+                }
+                Directory.Delete(finalPath);//And finally we are deleting that directory.
             }
 
             _unitOfWork.ProductCategory.Remove(productToBeDeleted);

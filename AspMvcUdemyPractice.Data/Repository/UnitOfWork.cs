@@ -21,6 +21,7 @@ namespace AspMvcUdemyPractice.DataAccess.Repository
         public IApplicationUserRepository ApplicationUser { get; private set; }
         public IOrderHeaderRepository OrderHeaderCategory { get; private set; }
         public IOrderDetailRepository OrderDetailCategory { get; private set; }
+        public IProductImageRepository ProductImage { get; private set; }
 
         public UnitOfWork(ApplicationDbContext db)
         {
@@ -32,6 +33,7 @@ namespace AspMvcUdemyPractice.DataAccess.Repository
             ShoppingCartCategory = new ShoppingCartRepository(_db);
             OrderDetailCategory = new OrderDetailRepository(_db);
             OrderHeaderCategory = new OrderHeaderRepository(_db);
+            ProductImage = new ProductImageRepository(_db);
         }
 
         public void Save()
