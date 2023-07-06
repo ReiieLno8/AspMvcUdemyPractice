@@ -183,13 +183,13 @@ namespace AspMvcUdemyPractice.Areas.Customer.Controllers
 					_unitOfWork.OrderHeaderCategory.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
 					_unitOfWork.Save();
 				}
-                HttpContext.Session.Clear(); // after the the purchase shopping cart counter will turn back to zero
             }
 
 			// removing all the content inside shopping cart
 			List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCartCategory.GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
 			_unitOfWork.ShoppingCartCategory.RemoveRange(shoppingCarts);
-			_unitOfWork.Save();
+            HttpContext.Session.Clear(); // after the the purchase shopping cart counter will turn back to zero
+            _unitOfWork.Save();
             return View(id);
 		}
 
