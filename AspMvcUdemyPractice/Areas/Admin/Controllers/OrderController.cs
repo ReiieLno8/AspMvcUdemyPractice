@@ -29,12 +29,12 @@ namespace AspMvcUdemyPractice.Areas.Admin.Controllers
         }
         public IActionResult Details(int id)
         {
-            OrderVm = new()
+            OrderVm orderVm= new()
             {
                 OrderHeader = _unitOfWork.OrderHeaderCategory.Get(u => u.Id == id, includeProperties: "ApplicationUser"),
                 OrderDetail = _unitOfWork.OrderDetailCategory.GetAll(u => u.OrderHeaderId == id, includeProperties: "Product")
             };
-            return View(OrderVm);
+            return View(orderVm);
         }
 
         [HttpPost]
@@ -58,6 +58,7 @@ namespace AspMvcUdemyPractice.Areas.Admin.Controllers
             OrderHeaderFromDb.City = OrderVm.OrderHeader.City;
             OrderHeaderFromDb.State = OrderVm.OrderHeader.State;
             OrderHeaderFromDb.PostalCode = OrderVm.OrderHeader.PostalCode;
+            OrderHeaderFromDb.OrderDate = OrderVm.OrderHeader.OrderDate;
             if (!string.IsNullOrEmpty(OrderVm.OrderHeader.Carrier))
             {
                 OrderHeaderFromDb.Carrier = OrderVm.OrderHeader.Carrier;
@@ -123,6 +124,7 @@ namespace AspMvcUdemyPractice.Areas.Admin.Controllers
         }
 
         [ActionName("Details")]
+        [Authorize(Roles = SD.Role_Company)]
         [HttpPost]
         public IActionResult Details_Pay_Now()
         {
@@ -136,7 +138,7 @@ namespace AspMvcUdemyPractice.Areas.Admin.Controllers
             var options = new SessionCreateOptions
             {
                 SuccessUrl = domain + $"admin/order/PaymentConfirmation?orderHeaderId={OrderVm.OrderHeader.Id}",
-                CancelUrl = domain + $"admin/order/details?orderId={OrderVm.OrderHeader.Id}",
+                CancelUrl = domain + $"admin/order/details?Id={OrderVm.OrderHeader.Id}",
                 LineItems = new List<SessionLineItemOptions>(), //SessionLineItemOptions is a built in class in stripe package 
                 Mode = "payment",
             };
@@ -183,6 +185,8 @@ namespace AspMvcUdemyPractice.Areas.Admin.Controllers
                     _unitOfWork.Save();
                 }
             }
+
+            HttpContext.Session.Clear(); // after the the purchase shopping cart counter will turn back to zero
             return View(orderHeaderId);
         }
 
